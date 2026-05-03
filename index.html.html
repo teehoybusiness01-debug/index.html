@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XIAO YANG — DOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --black:   #0A0A0A;
+  --dark:    #111111;
+  --panel:   #181818;
+  --border:  #2A2A2A;
+  --gold:    #C8A44A;
+  --gold2:   #E8C36A;
+  --white:   #F0EDE8;
+  --grey:    #888888;
+  --red:     #E84040;
+  --ff-head: 'Bebas Neue', sans-serif;
+  --ff-body: 'DM Sans', sans-serif;
+  --ff-mono: 'Space Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform .15s ease, opacity .15s;
+  transform: translate(-50%, -50%);
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform .08s linear, width .2s, height .2s, border-color .2s;
+  transform: translate(-50%, -50%);
+  opacity: 0.6;
+}
+body:has(a:hover) #cursor { transform: translate(-50%,-50%) scale(2.5); }
+body:has(a:hover) #cursor-ring { width: 56px; height: 56px; border-color: var(--gold2); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  background: linear-gradient(to bottom, rgba(10,10,10,.95), transparent);
+  backdrop-filter: blur(0px);
+}
+
+.nav-logo {
+  font-family: var(--ff-head);
+  font-size: 26px;
+  letter-spacing: 4px;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-decoration: none;
+  transition: color .25s;
+  cursor: none;
+}
+.nav-links a:hover { color: var(--gold); }
+
+.nav-admin-btn {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--grey);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  cursor: none;
+  transition: all .25s;
+}
+.nav-admin-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── HERO ── */
+#hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(200,164,74,.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,164,74,.04) 0%, transparent 60%);
+}
+
+/* film grain overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+.hero-eyebrow {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp .8s .3s ease forwards;
+}
+
+.hero-name {
+  font-family: var(--ff-head);
+  font-size: clamp(80px, 14vw, 180px);
+  line-height: .92;
+  letter-spacing: 2px;
+  color: var(--white);
+  opacity: 0;
+  animation: fadeUp .9s .5s ease forwards;
+}
+.hero-name .accent { color: var(--gold); }
+
+.hero-sub {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 28px;
+  opacity: 0;
+  animation: fadeUp .8s .75s ease forwards;
+}
+.hero-sub-text {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--grey);
+  letter-spacing: 0.5px;
+  max-width: 420px;
+  line-height: 1.7;
+}
+.hero-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border), transparent);
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+  opacity: 0;
+  animation: fadeUp .8s .95s ease forwards;
+}
+
+.btn-primary {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--gold);
+  padding: 14px 28px;
+  text-decoration: none;
+  cursor: none;
+  transition: background .25s, transform .25s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+
+.btn-outline {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 28px;
+  text-decoration: none;
+  cursor: none;
+  transition: border-color .25s, color .25s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* scroll indicator */
+.hero-scroll {
+  position: absolute;
+  right: 48px; bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s 1.4s ease forwards;
+}
+.scroll-label {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--grey);
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--gold);
+  overflow: hidden;
+  padding: 10px 0;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: inline-flex;
+  animation: ticker 22s linear infinite;
+}
+.ticker-item {
+  font-family: var(--ff-head);
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: var(--black);
+  padding: 0 48px;
+}
+.ticker-dot { color: rgba(0,0,0,.35); }
+
+/* ── SECTION COMMON ── */
+section { padding: 100px 48px; }
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--ff-head);
+  font-size: clamp(42px, 6vw, 72px);
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-bottom: 48px;
+}
+
+/* ── WORK / VIDEO GRID ── */
+#work { background: var(--black); }
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2px;
+}
+
+.video-card {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--panel);
+  cursor: none;
+  group: true;
+}
+
+.video-thumb {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s cubic-bezier(.25,.1,.25,1), filter .4s;
+  filter: brightness(.75) saturate(.8);
+}
+
+.video-card:hover .video-thumb {
+  transform: scale(1.06);
+  filter: brightness(.55) saturate(1);
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px 22px;
+  opacity: 0;
+  transition: opacity .35s;
+}
+.video-card:hover .video-overlay { opacity: 1; }
+
+.video-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(.7);
+  width: 56px; height: 56px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+}
+.video-card:hover .video-play {
+  opacity: 1;
+  transform: translate(-50%,-50%) scale(1);
+}
+.video-play svg { fill: var(--gold); margin-left: 4px; }
+
+.video-cat {
+  font-family: var(--ff-mono);
+  font-size: 8.5px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.video-title {
+  font-family: var(--ff-head);
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+
+/* featured card */
+.video-card.featured {
+  grid-column: span 2;
+  aspect-ratio: 21/9;
+}
+
+/* ── ABOUT ── */
+#about {
+  background: var(--dark);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 40px;
+}
+
+.stat-box {
+  background: var(--panel);
+  padding: 28px 24px;
+}
+.stat-num {
+  font-family: var(--ff-head);
+  font-size: 52px;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--grey);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.about-text-wrap p {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--grey);
+  margin-bottom: 16px;
+}
+.about-text-wrap p strong { color: var(--white); font-weight: 500; }
+
+.skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.skill-chip {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  transition: border-color .2s, color .2s;
+}
+.skill-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── RATES ── */
+#rates {
+  background: var(--black);
+}
+
+.rates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.rate-card {
+  background: var(--panel);
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  transition: background .25s;
+}
+.rate-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--gold);
+}
+.rate-card:hover { background: #1E1E1E; }
+
+.rate-type {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.rate-amount {
+  font-family: var(--ff-head);
+  font-size: 48px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.rate-range {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--grey);
+  margin-bottom: 20px;
+}
+.rate-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--grey);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.ot-box {
+  background: var(--panel);
+  padding: 28px 36px;
+  margin-top: 2px;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  border-left: 3px solid var(--border);
+}
+.ot-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ot-label {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--grey);
+  text-transform: uppercase;
+}
+.ot-val {
+  font-family: var(--ff-head);
+  font-size: 28px;
+  color: var(--gold);
+}
+
+/* ── CONTACT ── */
+#contact {
+  background: var(--dark);
+  text-align: center;
+  padding: 120px 48px;
+}
+
+.contact-big {
+  font-family: var(--ff-head);
+  font-size: clamp(48px, 8vw, 100px);
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+.contact-link {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-top: 24px;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 4px;
+  cursor: none;
+  transition: color .2s;
+}
+.contact-link:hover { color: var(--gold2); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: var(--ff-head);
+  font-size: 18px;
+  letter-spacing: 4px;
+  color: var(--grey);
+}
+.footer-copy {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--border);
+  text-transform: uppercase;
+}
+
+/* ── ADMIN MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 500;
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  width: 600px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 48px;
+}
+
+.modal-title {
+  font-family: var(--ff-head);
+  font-size: 32px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  color: var(--white);
+}
+.modal-sub {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--grey);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+.form-input, .form-select {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: var(--ff-body);
+  font-size: 14px;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color .2s;
+  cursor: none;
+}
+.form-input:focus, .form-select:focus { border-color: var(--gold); }
+.form-select option { background: var(--panel); }
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn-add {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  padding: 14px 24px;
+  cursor: none;
+  flex: 1;
+  font-weight: 600;
+  transition: background .2s;
+}
+.btn-add:hover { background: var(--gold2); }
+
+.btn-cancel {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: none;
+  color: var(--grey);
+  border: 1px solid var(--border);
+  padding: 14px 24px;
+  cursor: none;
+  transition: color .2s, border-color .2s;
+}
+.btn-cancel:hover { color: var(--white); border-color: var(--grey); }
+
+.video-list-admin {
+  margin-top: 32px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.vlist-title {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.vlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.vlist-thumb {
+  width: 60px; height: 36px;
+  object-fit: cover;
+  background: var(--panel);
+  flex-shrink: 0;
+}
+.vlist-info { flex: 1; }
+.vlist-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+}
+.vlist-cat {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--grey);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.vlist-del {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  color: var(--red);
+  background: none;
+  border: none;
+  cursor: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: .6;
+  transition: opacity .2s;
+}
+.vlist-del:hover { opacity: 1; }
+
+/* ── VIDEO LIGHTBOX ── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.97);
+  z-index: 400;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  width: 90vw;
+  max-width: 1100px;
+  aspect-ratio: 16/9;
+  position: relative;
+}
+.lightbox-inner iframe {
+  width: 100%; height: 100%;
+  border: none;
+}
+.lightbox-close {
+  position: absolute;
+  top: 24px; right: 48px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--grey);
+  background: none;
+  border: none;
+  cursor: none;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+.lightbox-close:hover { color: var(--white); }
+
+/* ── FEATURED REEL BANNER ── */
+.reel-banner {
+  position: relative;
+  height: 80px;
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  padding: 0 48px;
+  overflow: hidden;
+  cursor: none;
+  border-top: 1px solid var(--border);
+}
+.reel-banner::before {
+  content: 'SHOWREEL 2024 ';
+  font-family: var(--ff-head);
+  font-size: 56px;
+  color: rgba(200,164,74,.07);
+  position: absolute;
+  white-space: nowrap;
+  letter-spacing: 8px;
+}
+.reel-banner-text {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  z-index: 1;
+}
+.reel-banner-cta {
+  margin-left: auto;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1;
+  cursor: none;
+  transition: color .2s;
+}
+.reel-banner-cta:hover { color: var(--gold); }
+.reel-arrow {
+  width: 32px; height: 1px;
+  background: currentColor;
+  display: inline-flex;
+  align-items: center;
+  transition: width .3s;
+}
+.reel-banner-cta:hover .reel-arrow { width: 48px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:.3; }
+  50% { opacity:1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- GRAIN -->
+<div class="grain"></div>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">XIAO<span>YANG</span></a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#rates">Rates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-admin-btn" onclick="openAdmin()">⊕ Admin</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Director of Photography · Bangkok, Thailand</div>
+  <div class="hero-name">XIAO<br><span class="accent">YANG</span></div>
+  <div class="hero-sub">
+    <p class="hero-sub-text">Cinematographer with <strong>13+ years on set</strong>. Music Video, TVC, Short Film, Commercial — every frame considered.</p>
+    <div class="hero-line"></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#work" class="btn-primary">View Work</a>
+    <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="btn-outline">Vimeo →</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-label">Scroll</div>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">DIRECTOR OF PHOTOGRAPHY <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">MUSIC VIDEO <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">COMMERCIAL <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">SHORT FILM <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">DIT <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">COLOR GRADING <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">BLOCK SHOT <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">DIRECTOR OF PHOTOGRAPHY <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">MUSIC VIDEO <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">COMMERCIAL <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">SHORT FILM <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">DIT <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">COLOR GRADING <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">BLOCK SHOT <span class="ticker-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- REEL BANNER -->
+<div class="reel-banner" onclick="openLightbox('https://vimeo.com/xiaoyangdop')">
+  <span class="reel-banner-text">Showreel 2024 — Available Now</span>
+  <a href="#" class="reel-banner-cta" onclick="event.preventDefault(); openLightbox('https://player.vimeo.com/video/xiaoyangdop')">
+    Watch Full Reel
+    <span class="reel-arrow"></span>
+  </a>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="reveal">
+    <div class="section-label">Selected Work</div>
+    <div class="section-title">PORTFOLIO</div>
+  </div>
+  <div class="video-grid reveal" id="videoGrid">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left reveal">
+    <div class="section-label">Who I Am</div>
+    <div class="section-title">ABOUT<br>ME</div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">13<span style="font-size:28px;color:var(--gold)">+</span></div>
+        <div class="stat-label">Years on Set</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Disciplines</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Vision</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <div class="about-text-wrap">
+      <p>ช่างภาพมืออาชีพที่เริ่มต้นจากผู้ช่วยกล้อง สู่ <strong>DIT</strong> และก้าวขึ้นเป็น <strong>Director of Photography</strong> — ทุกบทบาทสอนให้ฉันเข้าใจกองถ่ายจากทุกมุม</p>
+      <p>ความเชี่ยวชาญครอบคลุม <strong>Music Video, TVC, Short Film, Commercial</strong> พร้อมทักษะด้าน Block Shot Planning, Color Grade Review และ On-set Color Management</p>
+      <p>จบการศึกษาจาก <strong>มหาวิทยาลัยศรีนรินทรวิโรฒ (SWU)</strong> สาขา Cinema Production — COSCI</p>
+    </div>
+    <div class="skill-row">
+      <span class="skill-chip">Cinematography</span>
+      <span class="skill-chip">DIT</span>
+      <span class="skill-chip">Lighting Design</span>
+      <span class="skill-chip">Color Grading</span>
+      <span class="skill-chip">Block Shot</span>
+      <span class="skill-chip">DaVinci Resolve</span>
+      <span class="skill-chip">MV</span>
+      <span class="skill-chip">TVC</span>
+      <span class="skill-chip">Short Film</span>
+    </div>
+  </div>
+</section>
+
+<!-- RATES -->
+<section id="rates">
+  <div class="reveal">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">DAY RATE</div>
+  </div>
+  <div class="rates-grid reveal">
+    <div class="rate-card">
+      <div class="rate-type">Film / TVC</div>
+      <div class="rate-amount">฿20K<span style="font-size:24px;color:var(--grey)">–30K</span></div>
+      <div class="rate-range">12 – 15 hrs/day</div>
+      <div class="rate-note">อัตรานี้ขึ้นอยู่กับขนาดของงานและงบประมาณ สามารถปรับได้ตามความเหมาะสม</div>
+    </div>
+    <div class="rate-card">
+      <div class="rate-type">Music Video (MV)</div>
+      <div class="rate-amount">฿18K<span style="font-size:24px;color:var(--grey)">–25K</span></div>
+      <div class="rate-range">12 – 15 hrs/day</div>
+      <div class="rate-note">อัตรานี้ขึ้นอยู่กับขนาดของงานและงบประมาณ สามารถปรับได้ตามความเหมาะสม</div>
+    </div>
+  </div>
+  <div class="ot-box reveal">
+    <div class="ot-item">
+      <div class="ot-label">OT (After 15 hrs)</div>
+      <div class="ot-val">฿3,500</div>
+      <div style="font-family:var(--ff-mono);font-size:9px;color:var(--grey);letter-spacing:1px;">PER SESSION</div>
+    </div>
+    <div class="ot-item">
+      <div class="ot-label">After Midnight</div>
+      <div class="ot-val">+1 SESSION</div>
+      <div style="font-family:var(--ff-mono);font-size:9px;color:var(--grey);letter-spacing:1px;">ADDITIONAL CHARGE</div>
+    </div>
+    <div style="margin-left:auto; font-size:12px;color:var(--grey);font-weight:300;max-width:220px;line-height:1.7;">
+      All rates are negotiable based on project scope and budget.
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label" style="justify-content:center;">Get In Touch</div>
+    <div class="contact-big">LET'S MAKE<br>SOMETHING<br><span style="color:var(--gold)">GREAT.</span></div>
+    <p style="font-size:14px;color:var(--grey);font-weight:300;max-width:400px;margin:0 auto 16px;line-height:1.8;">
+      Looking for a DOP for your next Music Video, TVC, or Short Film? Let's talk.
+    </p>
+    <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="contact-link">View Vimeo Portfolio</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">XIAO YANG DOP</div>
+  <div class="footer-copy">© 2024 — Bangkok, Thailand — All Rights Reserved</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <div class="lightbox-inner">
+    <iframe id="lightboxFrame" allowfullscreen allow="autoplay"></iframe>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <div class="modal-title">Admin Panel</div>
+    <div class="modal-sub">Manage Your Portfolio</div>
+
+    <div class="form-group">
+      <label class="form-label">Video Title</label>
+      <input class="form-input" id="v-title" type="text" placeholder="e.g. Wonderframe – Wonderboy">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="v-cat">
+        <option value="MV">Music Video (MV)</option>
+        <option value="TVC">TVC / Commercial</option>
+        <option value="SHORT FILM">Short Film</option>
+        <option value="BRANDED">Branded Content</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Vimeo Video ID</label>
+      <input class="form-input" id="v-id" type="text" placeholder="e.g. 123456789 (from vimeo.com/123456789)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Featured (spanning card)</label>
+      <select class="form-select" id="v-featured">
+        <option value="false">No</option>
+        <option value="true">Yes – Show as wide card</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-add" onclick="addVideo()">Add to Portfolio</button>
+      <button class="btn-cancel" onclick="closeAdmin()">Cancel</button>
+    </div>
+
+    <div class="video-list-admin">
+      <div class="vlist-title">Current Portfolio</div>
+      <div id="adminVideoList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   DATA — default videos (Vimeo IDs)
+   Replace these with your real Vimeo IDs!
+══════════════════════════════════════════ */
+const DEFAULT_VIDEOS = [
+  { id:'1',  title:'SHOWREEL 2024',           cat:'SHOWREEL',   vimeoId:'1084344629', featured:true  },
+  { id:'2',  title:'Music Video — TVC Cut',   cat:'MV',         vimeoId:'1084344629', featured:false },
+  { id:'3',  title:'Commercial Project',      cat:'TVC',        vimeoId:'1084344629', featured:false },
+  { id:'4',  title:'Short Film — Colour',     cat:'SHORT FILM', vimeoId:'1084344629', featured:false },
+  { id:'5',  title:'Branded Content',         cat:'BRANDED',    vimeoId:'1084344629', featured:false },
+];
+
+/* ══════ STATE ══════ */
+let videos = JSON.parse(localStorage.getItem('xy_videos') || 'null') || DEFAULT_VIDEOS;
+function save() { localStorage.setItem('xy_videos', JSON.stringify(videos)); }
+
+/* ══════ CURSOR ══════ */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top  = e.clientY + 'px';
+});
+
+/* ══════ REVEAL ON SCROLL ══════ */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ══════ RENDER GRID ══════ */
+function thumbUrl(vimeoId) {
+  return `https://vumbnail.com/${vimeoId}.jpg`;
+}
+
+function renderGrid() {
+  const grid = document.getElementById('videoGrid');
+  grid.innerHTML = '';
+  videos.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'video-card' + (v.featured ? ' featured' : '');
+    card.innerHTML = `
+      <img class="video-thumb" src="${thumbUrl(v.vimeoId)}" alt="${v.title}" loading="lazy"
+           onerror="this.style.background='var(--panel)';this.src=''">
+      <div class="video-play">
+        <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+      </div>
+      <div class="video-overlay">
+        <div class="video-cat">${v.cat}</div>
+        <div class="video-title">${v.title}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openLightbox(`https://player.vimeo.com/video/${v.vimeoId}?autoplay=1&title=0&byline=0`));
+    grid.appendChild(card);
+  });
+}
+
+/* ══════ LIGHTBOX ══════ */
+function openLightbox(url) {
+  document.getElementById('lightboxFrame').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightboxFrame').src = '';
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if(e.target === this) closeLightbox();
+});
+
+/* ══════ ADMIN ══════ */
+function openAdmin() {
+  document.getElementById('adminModal').classList.add('open');
+  renderAdminList();
+}
+function closeAdmin() {
+  document.getElementById('adminModal').classList.remove('open');
+}
+document.getElementById('adminModal').addEventListener('click', function(e) {
+  if(e.target === this) closeAdmin();
+});
+
+function renderAdminList() {
+  const list = document.getElementById('adminVideoList');
+  list.innerHTML = '';
+  videos.forEach((v, i) => {
+    const item = document.createElement('div');
+    item.className = 'vlist-item';
+    item.innerHTML = `
+      <img class="vlist-thumb" src="${thumbUrl(v.vimeoId)}" onerror="this.src=''">
+      <div class="vlist-info">
+        <div class="vlist-name">${v.title}</div>
+        <div class="vlist-cat">${v.cat} ${v.featured ? '· ★ Featured' : ''}</div>
+      </div>
+      <button class="vlist-del" onclick="deleteVideo(${i})">✕ Remove</button>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function addVideo() {
+  const title = document.getElementById('v-title').value.trim();
+  const cat   = document.getElementById('v-cat').value;
+  const vid   = document.getElementById('v-id').value.trim();
+  const feat  = document.getElementById('v-featured').value === 'true';
+  if(!title || !vid) { alert('Please fill in title and Vimeo ID'); return; }
+  videos.unshift({ id: Date.now().toString(), title, cat, vimeoId: vid, featured: feat });
+  save(); renderGrid(); renderAdminList();
+  document.getElementById('v-title').value = '';
+  document.getElementById('v-id').value = '';
+}
+
+function deleteVideo(index) {
+  if(!confirm('Remove this video?')) return;
+  videos.splice(index, 1);
+  save(); renderGrid(); renderAdminList();
+}
+
+/* ══════ INIT ══════ */
+renderGrid();
+</script>
+</body>
+</html>
