@@ -1092,7 +1092,15 @@ footer {
    DATA — default videos (Vimeo IDs)
    Replace these with your real Vimeo IDs!
 ══════════════════════════════════════════ */
+// ═══════════════════════════════════════════════════
+// HOW TO ADD YOUR VIDEOS:
+// 1. Go to your Vimeo video: vimeo.com/XXXXXXXXX
+// 2. Copy the number at the end (that's the vimeoId)
+// 3. Add it to this list, OR use the ⊕ Admin button
+// ═══════════════════════════════════════════════════
 const DEFAULT_VIDEOS = [
+  // ← Replace these with your real Vimeo IDs from vimeo.com/xiaoyangdop
+  // Example: { id:'1', title:'My MV Title', cat:'MV', vimeoId:'123456789', featured:true },
   { id:'1',  title:'SHOWREEL 2024',           cat:'SHOWREEL',   vimeoId:'1084344629', featured:true  },
   { id:'2',  title:'Music Video — TVC Cut',   cat:'MV',         vimeoId:'1084344629', featured:false },
   { id:'3',  title:'Commercial Project',      cat:'TVC',        vimeoId:'1084344629', featured:false },
@@ -1121,31 +1129,66 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 revealEls.forEach(el => io.observe(el));
 
-/* ══════ RENDER GRID ══════ */
-function thumbUrl(vimeoId) {
-  return `https://vumbnail.com/${vimeoId}.jpg`;
+/* ══════ RENDER GRID — Vimeo oEmbed thumbnails ══════ */
+const thumbCache = {};
+
+async function getVimeoThumb(vimeoId) {
+  if (thumbCache[vimeoId]) return thumbCache[vimeoId];
+  try {
+    const res = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}&width=640`);
+    const data = await res.json();
+    // Get larger thumbnail by replacing size in URL
+    const thumb = (data.thumbnail_url || '').replace(/_\d+x\d+/, '_640x360');
+    thumbCache[vimeoId] = thumb;
+    return thumb;
+  } catch(e) {
+    return '';
+  }
+}
+
+function makeCard(v) {
+  const card = document.createElement('div');
+  card.className = 'video-card' + (v.featured ? ' featured' : '');
+  card.innerHTML = `
+    <div class="video-thumb-wrap" style="width:100%;height:100%;position:relative;background:var(--panel);overflow:hidden;">
+      <img class="video-thumb" src="" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;">
+      <div class="thumb-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="opacity:.2">
+          <rect x="4" y="4" width="24" height="24" rx="2" stroke="#C8A44A" stroke-width="1.5"/>
+          <path d="M4 12h24M12 4v24" stroke="#C8A44A" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div class="video-play">
+      <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14" fill="#C8A44A"/></svg>
+    </div>
+    <div class="video-overlay">
+      <div class="video-cat">${v.cat}</div>
+      <div class="video-title">${v.title}</div>
+    </div>
+  `;
+  card.addEventListener('click', () => openLightbox(`https://player.vimeo.com/video/${v.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`));
+
+  // Load thumbnail async
+  const img = card.querySelector('.video-thumb');
+  const loader = card.querySelector('.thumb-loading');
+  getVimeoThumb(v.vimeoId).then(url => {
+    if (url) {
+      img.src = url;
+      img.onload = () => {
+        img.style.opacity = '1';
+        if(loader) loader.style.display = 'none';
+      };
+    }
+  });
+
+  return card;
 }
 
 function renderGrid() {
   const grid = document.getElementById('videoGrid');
   grid.innerHTML = '';
-  videos.forEach(v => {
-    const card = document.createElement('div');
-    card.className = 'video-card' + (v.featured ? ' featured' : '');
-    card.innerHTML = `
-      <img class="video-thumb" src="${thumbUrl(v.vimeoId)}" alt="${v.title}" loading="lazy"
-           onerror="this.style.background='var(--panel)';this.src=''">
-      <div class="video-play">
-        <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
-      </div>
-      <div class="video-overlay">
-        <div class="video-cat">${v.cat}</div>
-        <div class="video-title">${v.title}</div>
-      </div>
-    `;
-    card.addEventListener('click', () => openLightbox(`https://player.vimeo.com/video/${v.vimeoId}?autoplay=1&title=0&byline=0`));
-    grid.appendChild(card);
-  });
+  videos.forEach(v => grid.appendChild(makeCard(v)));
 }
 
 /* ══════ LIGHTBOX ══════ */
@@ -1180,14 +1223,14 @@ function renderAdminList() {
     const item = document.createElement('div');
     item.className = 'vlist-item';
     item.innerHTML = `
-      <img class="vlist-thumb" src="${thumbUrl(v.vimeoId)}" onerror="this.src=''">
+      <img class="vlist-thumb" id="at${i}" style="background:var(--panel)">
       <div class="vlist-info">
         <div class="vlist-name">${v.title}</div>
         <div class="vlist-cat">${v.cat} ${v.featured ? '· ★ Featured' : ''}</div>
       </div>
       <button class="vlist-del" onclick="deleteVideo(${i})">✕ Remove</button>
     `;
-    list.appendChild(item);
+    list.appendChild(item); getVimeoThumb(v.vimeoId).then(u=>{const el=list.querySelector('#at'+i);if(el&&u)el.src=u;});
   });
 }
 
