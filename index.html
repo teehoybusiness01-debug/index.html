@@ -544,6 +544,66 @@ section { padding: 100px 48px; }
   margin-bottom: 24px;
 }
 
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  text-decoration: none;
+  cursor: none;
+  transition: border-color .25s, background .25s, transform .2s;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.contact-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.contact-card:hover { border-color: var(--gold); background: #1c1c1c; transform: translateY(-3px); }
+.contact-card:hover::before { transform: scaleX(1); }
+
+.contact-card-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .25s;
+}
+.contact-card:hover .contact-card-icon { border-color: var(--gold); }
+
+.contact-card-label {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: var(--grey);
+  text-transform: uppercase;
+}
+.contact-card-value {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+
 .contact-link {
   font-family: var(--ff-mono);
   font-size: 13px;
@@ -919,9 +979,9 @@ footer {
 </div>
 
 <!-- REEL BANNER -->
-<div class="reel-banner" onclick="openLightbox('https://vimeo.com/xiaoyangdop')">
+<div class="reel-banner" style="cursor:pointer;" onclick="openLightbox('https://player.vimeo.com/video/1084344629?autoplay=1&title=0&byline=0&portrait=0')">
   <span class="reel-banner-text">Showreel 2024 — Available Now</span>
-  <a href="#" class="reel-banner-cta" onclick="event.preventDefault(); openLightbox('https://player.vimeo.com/video/xiaoyangdop')">
+  <a href="#" class="reel-banner-cta" onclick="event.preventDefault(); openLightbox('https://player.vimeo.com/video/1084344629?autoplay=1&title=0&byline=0&portrait=0')">
     Watch Full Reel
     <span class="reel-arrow"></span>
   </a>
@@ -1024,10 +1084,72 @@ footer {
   <div class="reveal">
     <div class="section-label" style="justify-content:center;">Get In Touch</div>
     <div class="contact-big">LET'S MAKE<br>SOMETHING<br><span style="color:var(--gold)">GREAT.</span></div>
-    <p style="font-size:14px;color:var(--grey);font-weight:300;max-width:400px;margin:0 auto 16px;line-height:1.8;">
+    <p style="font-size:14px;color:var(--grey);font-weight:300;max-width:400px;margin:0 auto 48px;line-height:1.8;">
       Looking for a DOP for your next Music Video, TVC, or Short Film? Let's talk.
     </p>
-    <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="contact-link">View Vimeo Portfolio</a>
+
+    <div class="contact-cards">
+
+      <!-- EMAIL -->
+      <a href="mailto:movierism@gmail.com" class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8A44A" stroke-width="1.5">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 7l10 7 10-7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">movierism@gmail.com</div>
+        </div>
+      </a>
+
+      <!-- LINE -->
+      <a href="https://line.me/ti/p/~xiaoyang16" target="_blank" class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8A44A" stroke-width="1.5">
+            <path d="M21 11.5C21 16.75 16.75 21 12 21c-1.4 0-2.72-.32-3.88-.89L3 21l.89-5.12A8.96 8.96 0 0 1 3 11.5C3 6.25 7.25 2 12 2s9 4.25 9 9.5z"/>
+            <path d="M8 11h.01M12 11h.01M16 11h.01" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-card-label">LINE</div>
+          <div class="contact-card-value">xiaoyang16</div>
+        </div>
+      </a>
+
+      <!-- PHONE -->
+      <a href="tel:0827331494" class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8A44A" stroke-width="1.5">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.04-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-card-label">Tel</div>
+          <div class="contact-card-value">082-733-1494</div>
+        </div>
+      </a>
+
+      <!-- VIMEO -->
+      <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="contact-card">
+        <div class="contact-card-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C8A44A" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10,8 16,12 10,16" fill="#C8A44A" stroke="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-card-label">Vimeo</div>
+          <div class="contact-card-value">vimeo.com/xiaoyangdop</div>
+        </div>
+      </a>
+
+    </div>
+
+    <p style="font-family:var(--ff-mono);font-size:9px;letter-spacing:2px;color:var(--grey);text-transform:uppercase;margin-top:16px;">
+      Based in Bangkok · Available Nationwide
+    </p>
   </div>
 </section>
 
