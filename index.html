@@ -5,79 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XIAO YANG — Director of Photography | Bangkok</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Xiao Yang - Professional Director of Photography based in Bangkok. Specialized in Music Videos, TVCs, and Films.">
-    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Xiao Yang - Professional Director of Photography based in Bangkok. Specialized in Music Videos, TVCs, and Films with 13+ years of experience.">
+    <meta property="og:title" content="XIAO YANG — Director of Photography">
+    <meta property="og:image" content="assets/xiaoyang-portrait.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,100;1,9..40,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
-    /* [ใส่ CSS เดิมของเจ้านายไว้ตรงนี้ทั้งหมดครับ] */
-    /* ... ] */
+/* ═══════════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --black:   #080808;
+  --dark:    #101010;
+  --panel:   #161616;
+  --border:  #252525;
+  --gold:    #D1B464; 
+  --gold-dim:#8C7843;
+  --gold2:   #F3E0B5; 
+  --white:   #FAF8F5;
+  --grey:    #999999;
+  --grey-dark:#555555;
+  --ff-head: 'Bebas Neue', sans-serif;
+  --ff-body: 'DM Sans', sans-serif;
+  --ff-mono: 'Space Mono', monospace;
+  --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
-    /* เพิ่ม CSS สำหรับรูป Portrait */
-    .hero-image-wrap {
-      position: absolute;
-      right: 60px;
-      bottom: 120px;
-      width: 30vw;
-      max-width: 450px;
-      z-index: 1;
-      opacity: 0;
-      animation: fadeUp 1.2s 0.8s ease forwards;
-    }
-    .hero-portrait {
-      width: 100%;
-      height: auto;
-      filter: grayscale(100%) brightness(0.8);
-      transition: all 0.5s ease;
-    }
-    .hero-portrait:hover {
-      filter: grayscale(0%) brightness(1);
-      transform: scale(1.02);
-    }
-    @media (max-width: 768px) { .hero-image-wrap { display: none; } }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--ff-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+#cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+#cursor-ring { position: fixed; width: 30px; height: 30px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); opacity: 0.5; transition: width .2s, height .2s; }
+body:has(a:hover, button:hover, .video-card:hover) #cursor { opacity: 0; }
+body:has(a:hover, button:hover, .video-card:hover) #cursor-ring { width: 50px; height: 50px; opacity: 1; border-width: 2px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px; background: rgba(8, 8, 8, 0.7); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.nav-logo { font-family: var(--ff-head); font-size: 28px; letter-spacing: 3px; color: var(--white); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--grey); text-decoration: none; transition: var(--transition); }
+.nav-links a:hover { color: var(--gold2); }
+.nav-admin-btn { font-family: var(--ff-mono); font-size: 10px; text-transform: uppercase; color: var(--grey-dark); background: none; border: 1px solid rgba(255,255,255,0.08); padding: 9px 18px; cursor: none; transition: var(--transition); }
+.nav-admin-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── HERO ── */
+#hero { height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 60px 80px; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(209,180,100,0.08) 0%, transparent 80%); z-index: 0; }
+
+.hero-image-wrap {
+  position: absolute;
+  right: 60px; bottom: 80px;
+  width: 35vw; max-width: 500px;
+  z-index: 1; opacity: 0;
+  animation: fadeUp 1.2s 0.8s ease forwards;
+}
+.hero-portrait {
+  width: 100%; height: auto;
+  filter: grayscale(100%) brightness(0.8);
+  transition: all 0.5s ease;
+  mask-image: linear-gradient(to top, transparent, black 20%); /* จางช่วงล่างให้เนียน */
+}
+.hero-image-wrap:hover .hero-portrait { filter: grayscale(0%) brightness(1); transform: scale(1.02); }
+
+.hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 5px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 20px; z-index: 2; position: relative; opacity: 0; animation: fadeUp .8s .3s ease forwards; }
+.hero-name { font-family: var(--ff-head); font-size: clamp(90px, 16vw, 210px); line-height: 0.88; color: var(--white); z-index: 2; position: relative; opacity: 0; animation: fadeUp .9s .5s ease forwards; }
+.hero-name .accent { color: var(--gold); }
+.hero-sub { margin-top: 35px; max-width: 460px; z-index: 2; position: relative; opacity: 0; animation: fadeUp .8s .75s ease forwards; }
+.hero-sub-text { font-size: 15px; font-weight: 300; color: var(--grey); line-height: 1.8; }
+
+/* ── TICKER ── */
+.ticker-wrap { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 15px 0; white-space: nowrap; }
+.ticker-track { display: inline-flex; animation: ticker 30s linear infinite; }
+.ticker-item { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 3px; color: var(--grey); padding: 0 60px; text-transform: uppercase; }
+
+/* ── WORK ── */
+section { padding: 120px 60px; }
+.section-label { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 5px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 15px; }
+.section-title { font-family: var(--ff-head); font-size: clamp(50px, 8vw, 90px); margin-bottom: 60px; }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 15px; }
+.video-card { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--panel); transition: transform 0.5s ease; cursor: none; }
+.video-thumb { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: transform .7s ease; }
+.video-card:hover .video-thumb { transform: scale(1.05); filter: brightness(0.9); }
+.video-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+.video-title { font-family: var(--ff-head); font-size: 24px; color: var(--white); }
+
+/* ── LIGHTBOX ── */
+.lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 500; align-items: center; justify-content: center; }
+.lightbox.open { display: flex; }
+.lightbox-inner { width: 90vw; max-width: 1100px; aspect-ratio: 16/9; }
+.lightbox-close { position: absolute; top: 30px; right: 60px; color: var(--white); background: none; border: 1px solid var(--border); padding: 10px 20px; cursor: none; }
+
+/* ── ADMIN MODAL ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 600; backdrop-filter: blur(10px); align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--dark); padding: 50px; width: 500px; border: 1px solid var(--border); }
+.form-input { width: 100%; padding: 12px; margin-bottom: 20px; background: #111; border: 1px solid var(--border); color: white; }
+.btn-add { background: var(--gold); color: black; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: none; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (max-width: 768px) { .hero-image-wrap { display: none; } section { padding: 80px 20px; } nav { padding: 20px; } }
 </style>
 </head>
 <body>
 
-<!-- GRAIN & CURSOR คงเดิม -->
-<div class="grain"></div>
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
-<!-- NAV (ย้ายปุ่ม Admin มาวางตรงนี้) -->
 <nav>
-  <a href="#" class="nav-logo">XIAO<span>YANG</span></a>
-  <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#rates">Rates</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="nav-admin-btn" aria-label="Open Admin Panel" onclick="openAdmin()">⊕ Admin</button>
+    <a href="#" class="nav-logo">XIAO<span>YANG</span></a>
+    <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-admin-btn" aria-label="Open Admin" onclick="openAdmin()">⊕ Admin</button>
 </nav>
 
-<!-- HERO (เพิ่ม Div รูปภาพ) -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  
-  <!-- ส่วนรูปภาพเจ้านาย -->
-  <div class="hero-image-wrap">
-    <img src="assets/xiaoyang-portrait.jpg" alt="Xiao Yang Portrait" class="hero-portrait">
-  </div>
+    <div class="hero-bg"></div>
+    
+    <!-- ส่วนรูปภาพ Portrait ของเจ้านาย -->
+    <div class="hero-image-wrap">
+        <img src="assets/xiaoyang-portrait.jpg" alt="Xiao Yang DOP Portrait" class="hero-portrait" onerror="this.style.display='none'; console.log('Image not found at assets/xiaoyang-portrait.jpg')">
+    </div>
 
-  <div class="hero-eyebrow">Director of Photography · Bangkok, Thailand</div>
-  <div class="hero-name">XIAO<br><span class="accent">YANG</span></div>
-  <div class="hero-sub">
-    <p class="hero-sub-text">Cinematographer with <strong>13+ years on set</strong>. Music Video, TVC, Short Film, Commercial — every frame considered.</p>
-    <div class="hero-line"></div>
-  </div>
-  <div class="hero-cta">
-    <a href="#work" class="btn-primary">View Work</a>
-    <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="btn-outline">Vimeo Portfolio →</a>
-  </div>
+    <div class="hero-eyebrow">Director of Photography · Bangkok</div>
+    <div class="hero-name">XIAO<br><span class="accent">YANG</span></div>
+    <div class="hero-sub">
+        <p class="hero-sub-text">Cinematographer with 13+ years on set. Music Video, TVC, Short Film — every frame considered.</p>
+    </div>
 </section>
 
-<!-- [ที่เหลือของ Code เจ้านายวางต่อได้เลยครับ] -->
-...
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span class="ticker-item">Director of Photography ◆ Music Video ◆ TVC ◆ DIT ◆ Color Grading ◆ </span>
+        <span class="ticker-item">Director of Photography ◆ Music Video ◆ TVC ◆ DIT ◆ Color Grading ◆ </span>
+    </div>
+</div>
+
+<section id="work">
+    <div class="section-label">Selected Projects</div>
+    <h2 class="section-title">PORTFOLIO</h2>
+    <div class="video-grid" id="videoGrid"></div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-inner" onclick="event.stopPropagation()">
+        <iframe id="lightboxFrame" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+    <button class="lightbox-close">✕ Close</button>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+    <div class="modal">
+        <h2 style="margin-bottom:20px">Admin Panel</h2>
+        <input type="text" id="v-title" class="form-input" placeholder="Project Title">
+        <input type="text" id="v-id" class="form-input" placeholder="Vimeo Video ID (e.g. 1084344629)">
+        <button class="btn-add" onclick="addVideo()">Add to Portfolio</button>
+        <button class="btn-cancel" style="background:none; color:white; border:none; margin-top:15px; cursor:none" onclick="closeAdmin()">Cancel</button>
+        <div id="adminVideoList" style="margin-top:30px; border-top:1px solid #333; padding-top:20px"></div>
+    </div>
+</div>
+
+<script>
+const DEFAULT_VIDEOS = [
+    { id: '1', title: 'SHOWREEL 2024', vimeoId: '1084344629' },
+    { id: '2', title: 'MUSIC VIDEO PROJECT', vimeoId: '1084344629' }
+];
+
+let videos = JSON.parse(localStorage.getItem('xy_videos')) || DEFAULT_VIDEOS;
+
+// CURSOR LOGIC
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mX = 0, mY = 0, rX = 0, rY = 0;
+
+document.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; cur.style.left = mX + 'px'; cur.style.top = mY + 'px'; });
+function anim() { rX += (mX - rX) * 0.15; rY += (mY - rY) * 0.15; ring.style.left = rX + 'px'; ring.style.top = rY + 'px'; requestAnimationFrame(anim); }
+anim();
+
+// VIMEO THUMBNAILS
+async function getThumb(id) {
+    try {
+        const res = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}`);
+        const data = await res.json();
+        return data.thumbnail_url;
+    } catch { return ''; }
+}
+
+// RENDER GRID
+async function renderGrid() {
+    const grid = document.getElementById('videoGrid');
+    grid.innerHTML = '';
+    for (const v of videos) {
+        const thumb = await getThumb(v.vimeoId);
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+            <img src="${thumb}" class="video-thumb">
+            <div class="video-overlay"><div class="video-title">${v.title}</div></div>
+        `;
+        card.onclick = () => openLightbox(v.vimeoId);
+        grid.appendChild(card);
+    }
+}
+
+function openLightbox(id) {
+    document.getElementById('lightboxFrame').src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+    document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+    document.getElementById('lightboxFrame').src = '';
+    document.getElementById('lightbox').classList.remove('open');
+}
+
+function openAdmin() { document.getElementById('adminModal').classList.add('open'); renderAdminList(); }
+function closeAdmin() { document.getElementById('adminModal').classList.remove('open'); }
+
+function renderAdminList() {
+    const list = document.getElementById('adminVideoList');
+    list.innerHTML = videos.map((v, i) => `
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px">
+            <span>${v.title}</span>
+            <button onclick="deleteVideo(${i})" style="color:red; background:none; border:none; cursor:none">✕</button>
+        </div>
+    `).join('');
+}
+
+function addVideo() {
+    const title = document.getElementById('v-title').value;
+    const vid = document.getElementById('v-id').value;
+    if (!title || !vid) return;
+    videos.unshift({ id: Date.now().toString(), title, vimeoId: vid });
+    localStorage.setItem('xy_videos', JSON.stringify(videos));
+    renderGrid(); closeAdmin();
+}
+
+function deleteVideo(i) {
+    videos.splice(i, 1);
+    localStorage.setItem('xy_videos', JSON.stringify(videos));
+    renderGrid(); renderAdminList();
+}
+
+window.onload = renderGrid;
+</script>
+</body>
+</html>
