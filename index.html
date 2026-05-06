@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XIAO YANG — Director of Photography | Bangkok</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,100;1,9..40,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XIAO YANG — Director of Photography | Bangkok</title>
+    
+    <!-- ── SEO & SOCIAL META TAGS ── -->
+    <meta name="description" content="Xiao Yang - Professional Director of Photography based in Bangkok. Specialized in Music Videos, TVCs, and Films with 13+ years of experience.">
+    <meta property="og:title" content="XIAO YANG — Director of Photography">
+    <meta property="og:description" content="Cinematographer based in Bangkok. Music Video, TVC, Short Film, Commercial.">
+    <meta property="og:image" content="URL_TO_YOUR_SHOWREEL_THUMBNAIL.jpg">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,100;1,9..40,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════
-   RESET & TOKENS — Refined Palette
+    RESET & TOKENS — Refined Palette
 ═══════════════════════════════════════════ */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --black:   #080808;
-  --dark:    #101010;
-  --panel:   #161616;
-  --border:  #252525;
-  --gold:    #D1B464; /* Refined, warmer gold */
+  --black:    #080808;
+  --dark:     #101010;
+  --panel:    #161616;
+  --border:   #252525;
+  --gold:     #D1B464; 
   --gold-dim:#8C7843;
-  --gold2:   #F3E0B5; /* Lighter highlight gold */
-  --white:   #FAF8F5;
-  --grey:    #999999;
+  --gold2:    #F3E0B5; 
+  --white:    #FAF8F5;
+  --grey:     #999999;
   --grey-dark:#555555;
-  --red:     #EF5350;
+  --red:      #EF5350;
   --ff-head: 'Bebas Neue', sans-serif;
   --ff-body: 'DM Sans', sans-serif;
   --ff-mono: 'Space Mono', monospace;
@@ -43,7 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── CUSTOM CURSOR — More Minimalist ── */
+/* ── CUSTOM CURSOR ── */
 #cursor {
   position: fixed;
   width: 8px; height: 8px;
@@ -135,7 +143,7 @@ nav {
 }
 .nav-admin-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(209, 180, 100, 0.05); }
 
-/* ── HERO — Bigger, Bold ── */
+/* ── HERO ── */
 #hero {
   height: 100vh;
   display: flex;
@@ -159,7 +167,7 @@ nav {
   inset: 0;
   z-index: 200;
   pointer-events: none;
-  opacity: 0.025; /* Slightly less visible */
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
 
@@ -176,7 +184,7 @@ nav {
 
 .hero-name {
   font-family: var(--ff-head);
-  font-size: clamp(90px, 16vw, 210px); /* Bigger max size */
+  font-size: clamp(90px, 16vw, 210px);
   line-height: 0.88;
   letter-spacing: -2px;
   color: var(--white);
@@ -271,7 +279,7 @@ nav {
   animation: scrollPulse 2s infinite;
 }
 
-/* ── TICKER — Refined ── */
+/* ── TICKER ── */
 .ticker-wrap {
   background: var(--dark);
   border-top: 1px solid var(--border);
@@ -282,10 +290,10 @@ nav {
 }
 .ticker-track {
   display: inline-flex;
-  animation: ticker 30s linear infinite; /* Slower ticker */
+  animation: ticker 30s linear infinite;
 }
 .ticker-item {
-  font-family: var(--ff-mono); /* More modern look */
+  font-family: var(--ff-mono);
   font-size: 10px;
   letter-spacing: 3px;
   color: var(--grey);
@@ -295,7 +303,7 @@ nav {
 .ticker-dot { color: var(--gold-dim); margin: 0 5px; }
 
 /* ── SECTION COMMON ── */
-section { padding: 140px 60px; } /* More vertical space */
+section { padding: 140px 60px; }
 
 .section-label {
   font-family: var(--ff-mono);
@@ -322,13 +330,13 @@ section { padding: 140px 60px; } /* More vertical space */
   margin-bottom: 70px;
 }
 
-/* ── WORK — More Spacing ── */
+/* ── WORK ── */
 #work { background: var(--black); }
 
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 15px; /* Added gap */
+  gap: 15px;
 }
 
 .video-card {
@@ -360,8 +368,6 @@ section { padding: 140px 60px; } /* More vertical space */
   flex-direction: column;
   justify-content: flex-end;
   padding: 25px 30px;
-  opacity: 1; /* Always visible for better readability */
-  transition: var(--transition);
 }
 
 .video-play {
@@ -412,7 +418,7 @@ section { padding: 140px 60px; } /* More vertical space */
   aspect-ratio: 21/9;
 }
 
-/* ── ABOUT — Two Column ── */
+/* ── ABOUT ── */
 #about {
   background: var(--dark);
   display: grid;
@@ -501,7 +507,7 @@ section { padding: 140px 60px; } /* More vertical space */
   content: '';
   position: absolute;
   top: 0; left: 0;
-  width: 100%; height: 2px; /* Top border style */
+  width: 100%; height: 2px;
   background: var(--gold-dim);
   transform: scaleX(0);
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -640,22 +646,6 @@ section { padding: 140px 60px; } /* More vertical space */
   letter-spacing: 0.2px;
 }
 
-.contact-link {
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  letter-spacing: 3px;
-  color: var(--gold);
-  text-decoration: none;
-  text-transform: uppercase;
-  display: inline-block;
-  margin-top: 30px;
-  border-bottom: 1px solid var(--gold-dim);
-  padding-bottom: 6px;
-  cursor: none;
-  transition: var(--transition);
-}
-.contact-link:hover { color: var(--gold2); border-color: var(--gold2); }
-
 /* ── FOOTER ── */
 footer {
   background: var(--black);
@@ -679,7 +669,7 @@ footer {
   text-transform: uppercase;
 }
 
-/* ── ADMIN MODAL — Refined Glassmorphism ── */
+/* ── ADMIN MODAL ── */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -748,7 +738,6 @@ footer {
   border-radius: 0;
 }
 .form-input:focus, .form-select:focus { border-color: var(--gold-dim); background: rgba(255,255,255,0.05); }
-.form-select option { background: var(--dark); color: var(--white); }
 
 .modal-actions {
   display: flex;
@@ -820,13 +809,6 @@ footer {
   color: var(--white);
   margin-bottom: 2px;
 }
-.vlist-cat {
-  font-family: var(--ff-mono);
-  font-size: 10px;
-  color: var(--grey-dark);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
 .vlist-del {
   font-family: var(--ff-mono);
   font-size: 10px;
@@ -885,7 +867,7 @@ footer {
 }
 .lightbox-close:hover { color: var(--white); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.03); }
 
-/* ── FEATURED REEL BANNER — Refined ── */
+/* ── FEATURED REEL BANNER ── */
 .reel-banner {
   position: relative;
   height: 90px;
@@ -897,7 +879,6 @@ footer {
   cursor: none;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  transition: background 0.4s ease;
 }
 .reel-banner:hover { background: #151515; }
 .reel-banner::before {
@@ -936,12 +917,12 @@ footer {
 }
 .reel-banner-cta:hover { color: var(--gold2); }
 .reel-arrow {
-  width: 35px; height: 1px;
-  background: currentColor;
-  display: inline-flex;
-  align-items: center;
-  transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  position: relative;
+    width: 35px; height: 1px;
+    background: currentColor;
+    display: inline-flex;
+    align-items: center;
+    transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
 }
 .reel-arrow::after {
     content: '';
@@ -971,7 +952,7 @@ footer {
   50% { opacity:1; transform: translateY(5px); }
 }
 
-/* ── REVEAL ON SCROLL — Smooth ── */
+/* ── REVEAL ON SCROLL ── */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -982,7 +963,6 @@ footer {
   transform: translateY(0);
 }
 
-/* Staggered reveal for grid items */
 .video-grid .reveal { transition-delay: 0.1s; }
 .video-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
 .video-grid .reveal:nth-child(3) { transition-delay: 0.3s; }
@@ -1008,7 +988,7 @@ footer {
     <li><a href="#rates">Rates</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-admin-btn" onclick="openAdmin()">⊕ Admin</button>
+  <button class="nav-admin-btn" aria-label="Open Portfolio Admin Panel" onclick="openAdmin()">⊕ Admin</button>
 </nav>
 
 <!-- HERO -->
@@ -1040,18 +1020,11 @@ footer {
     <span class="ticker-item">DIT <span class="ticker-dot">◆</span></span>
     <span class="ticker-item">Color Grading <span class="ticker-dot">◆</span></span>
     <span class="ticker-item">Block Shot <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Director of Photography <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Music Video <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Commercial <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Short Film <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">DIT <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Color Grading <span class="ticker-dot">◆</span></span>
-    <span class="ticker-item">Block Shot <span class="ticker-dot">◆</span></span>
   </div>
 </div>
 
 <!-- REEL BANNER -->
-<div class="reel-banner" style="cursor:pointer;" onclick="openLightbox('https://player.vimeo.com/video/1084344629?autoplay=1&title=0&byline=0&portrait=0')">
+<div class="reel-banner" style="cursor:pointer;" aria-label="Watch Showreel 2024" onclick="openLightbox('https://player.vimeo.com/video/1084344629?autoplay=1&title=0&byline=0&portrait=0')">
   <span class="reel-banner-text">Featured: Showreel 2024 — Available Now</span>
   <a href="#" class="reel-banner-cta" onclick="event.preventDefault(); openLightbox('https://player.vimeo.com/video/1084344629?autoplay=1&title=0&byline=0&portrait=0')">
     Watch Full Reel
@@ -1066,7 +1039,6 @@ footer {
     <div class="section-title">PORTFOLIO</div>
   </div>
   <div class="video-grid" id="videoGrid">
-    <!-- Populated by JS, reveal class added there -->
   </div>
 </section>
 
@@ -1106,10 +1078,6 @@ footer {
       <span class="skill-chip">Lighting Design</span>
       <span class="skill-chip">Color Grading</span>
       <span class="skill-chip">Block Shot</span>
-      <span class="skill-chip">DaVinci Resolve</span>
-      <span class="skill-chip">MV</span>
-      <span class="skill-chip">TVC</span>
-      <span class="skill-chip">Short Film</span>
     </div>
   </div>
 </section>
@@ -1134,19 +1102,6 @@ footer {
       <div class="rate-note">อัตรานี้ขึ้นอยู่กับขนาดของงานและงบประมาณ สามารถปรับเปลี่ยนได้ตามความเหมาะสมของโปรเจกต์</div>
     </div>
   </div>
-  <div class="ot-box reveal">
-    <div class="ot-item">
-      <div class="ot-label">OT (After 15 hrs)</div>
-      <div class="ot-val">฿3,500<span>PER SESSION</span></div>
-    </div>
-    <div class="ot-item">
-      <div class="ot-label">After Midnight</div>
-      <div class="ot-val">+1 SESSION<span>ADDITIONAL CHARGE</span></div>
-    </div>
-    <div style="margin-left:auto; font-size:13px;color:var(--grey);font-weight:300;max-width:280px;line-height:1.8; text-align: right; opacity: 0.7;">
-      *All rates are negotiable based on project scope, complexities, and budget. Pre-production fees may apply separately.
-    </div>
-  </div>
 </section>
 
 <!-- CONTACT -->
@@ -1154,18 +1109,11 @@ footer {
   <div class="reveal">
     <div class="section-label" style="justify-content:center;">Get In Touch</div>
     <div class="contact-big">LET'S MAKE<br>SOMETHING<br><span style="color:var(--gold)">GREAT.</span></div>
-    <p style="font-size:15px;color:var(--grey);font-weight:300;max-width:450px;margin:0 auto 60px;line-height:1.9;">
-      Looking for a Director of Photography for your next Music Video, TVC, or Short Film? I'm available nationwide. Let's collaborate.
-    </p>
 
     <div class="contact-cards reveal">
-
-      <!-- EMAIL -->
-      <a href="mailto:movierism@gmail.com" class="contact-card">
+      <a href="mailto:movierism@gmail.com" class="contact-card" aria-label="Send email to Xiao Yang">
         <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <div class="contact-info">
           <div class="contact-card-label">Email</div>
@@ -1173,62 +1121,28 @@ footer {
         </div>
       </a>
 
-      <!-- LINE -->
-      <a href="https://line.me/ti/p/~xiaoyang16" target="_blank" class="contact-card">
+      <a href="https://line.me/ti/p/~xiaoyang16" target="_blank" class="contact-card" aria-label="Contact via LINE">
         <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         </div>
         <div class="contact-info">
           <div class="contact-card-label">LINE ID</div>
           <div class="contact-card-value">xiaoyang16</div>
         </div>
       </a>
-
-      <!-- PHONE -->
-      <a href="tel:0827331494" class="contact-card">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.04-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-        </div>
-        <div class="contact-info">
-          <div class="contact-card-label">Tel</div>
-          <div class="contact-card-value">082-733-1494</div>
-        </div>
-      </a>
-
-      <!-- VIMEO -->
-      <a href="https://vimeo.com/xiaoyangdop" target="_blank" class="contact-card">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16"/>
-          </svg>
-        </div>
-        <div class="contact-info">
-          <div class="contact-card-label">Vimeo Portfolio</div>
-          <div class="contact-card-value">vimeo.com/xiaoyangdop</div>
-        </div>
-      </a>
-
     </div>
-
-    <p style="font-family:var(--ff-mono);font-size:10px;letter-spacing:3px;color:var(--grey-dark);text-transform:uppercase;margin-top:20px; opacity: 0.6;">
-      Based in Bangkok, Thailand · Available Nationwide
-    </p>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">XIAO YANG DOP</div>
-  <div class="footer-copy">© 2024 — Xiao Yang Cinematography — All Rights Reserved</div>
+  <div class="footer-copy">© 2024 — Xiao Yang Cinematography</div>
 </footer>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <button class="lightbox-close" aria-label="Close video player" onclick="closeLightbox()">✕ Close</button>
   <div class="lightbox-inner">
     <iframe id="lightboxFrame" allowfullscreen allow="autoplay"></iframe>
   </div>
@@ -1239,155 +1153,80 @@ footer {
   <div class="modal">
     <div class="modal-title">Admin Panel</div>
     <div class="modal-sub">Manage Your Portfolio</div>
-
     <div class="form-group">
-      <label class="form-label">Video Title</label>
+      <label class="form-label" for="v-title">Video Title</label>
       <input class="form-input" id="v-title" type="text" placeholder="e.g. Wonderframe – Wonderboy">
     </div>
     <div class="form-group">
-      <label class="form-label">Category</label>
-      <select class="form-select" id="v-cat">
-        <option value="MV">Music Video (MV)</option>
-        <option value="TVC">TVC / Commercial</option>
-        <option value="SHORT FILM">Short Film</option>
-        <option value="BRANDED">Branded Content</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Vimeo Video ID</label>
-      <input class="form-input" id="v-id" type="text" placeholder="e.g. 123456789 (from vimeo.com/123456789)">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Featured Layout</label>
-      <select class="form-select" id="v-featured">
-        <option value="false">Standard Card</option>
-        <option value="true">Wide Card (Featured)</option>
-      </select>
+      <label class="form-label" for="v-id">Vimeo Video ID</label>
+      <input class="form-input" id="v-id" type="text" placeholder="e.g. 123456789">
     </div>
     <div class="modal-actions">
       <button class="btn-add" onclick="addVideo()">Add to Portfolio</button>
-      <button class="btn-cancel" onclick="closeAdmin()">Cancel</button>
+      <button class="btn-cancel" aria-label="Close Admin Panel" onclick="closeAdmin()">Cancel</button>
     </div>
-
-    <div class="video-list-admin">
-      <div class="vlist-title">Current Portfolio Content</div>
-      <div id="adminVideoList"></div>
-    </div>
+    <div class="video-list-admin" id="adminVideoList"></div>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════
-   DATA — default videos (Vimeo IDs)
-   Replace these with your real Vimeo IDs!
-══════════════════════════════════════════ */
 const DEFAULT_VIDEOS = [
-  { id:'1',  title:'SHOWREEL 2024',           cat:'SHOWREEL',   vimeoId:'1084344629', featured:true  },
-  { id:'2',  title:'Wonderframe – Wonderboy',  cat:'MV',         vimeoId:'1084344629', featured:false },
-  { id:'3',  title:'Samsung Galaxy TVC',      cat:'TVC',        vimeoId:'1084344629', featured:false },
-  { id:'4',  title:'"Echoes" Short Film',     cat:'SHORT FILM', vimeoId:'1084344629', featured:false },
-  { id:'5',  title:'Nike Branded Content',    cat:'BRANDED',     vimeoId:'1084344629', featured:false },
+  { id:'1',  title:'SHOWREEL 2024',  cat:'SHOWREEL', vimeoId:'1084344629', featured:true  },
+  { id:'2',  title:'Wonderframe – Wonderboy', cat:'MV', vimeoId:'1084344629', featured:false },
 ];
 
-/* ══════ STATE ══════ */
 let videos = JSON.parse(localStorage.getItem('xy_videos') || 'null') || DEFAULT_VIDEOS;
 function save() { localStorage.setItem('xy_videos', JSON.stringify(videos)); }
 
-/* ══════ CURSOR ══════ */
 const cur = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
 document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cur.style.left = mouseX + 'px';
-  cur.style.top  = mouseY + 'px';
+  mouseX = e.clientX; mouseY = e.clientY;
+  cur.style.left = mouseX + 'px'; cur.style.top = mouseY + 'px';
 });
 
-// Smooth ring animation
 function animateRing() {
-  let dX = mouseX - ringX;
-  let dY = mouseY - ringY;
-  
-  ringX += dX * 0.15;
-  ringY += dY * 0.15;
-  
-  ring.style.left = ringX + 'px';
-  ring.style.top  = ringY + 'px';
-  
+  ringX += (mouseX - ringX) * 0.15;
+  ringY += (mouseY - ringY) * 0.15;
+  ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
   requestAnimationFrame(animateRing);
 }
 animateRing();
 
-/* ══════ REVEAL ON SCROLL ══════ */
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { 
-    if(e.isIntersecting) {
-      e.target.classList.add('visible');
-      // If it's a grid, reveal its children too
-      if(e.target.id === 'videoGrid') {
-         e.target.querySelectorAll('.video-card').forEach(card => card.classList.add('visible'));
-      }
-    }
-  });
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 revealEls.forEach(el => io.observe(el));
 
-/* ══════ RENDER GRID — Vimeo oEmbed thumbnails ══════ */
-const thumbCache = {};
-
 async function getVimeoThumb(vimeoId) {
-  if (thumbCache[vimeoId]) return thumbCache[vimeoId];
   try {
     const res = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}&width=640`);
     const data = await res.json();
-    // Get larger thumbnail by replacing size in URL
-    const thumb = (data.thumbnail_url || '').replace(/_\d+x\d+/, '_640x360');
-    thumbCache[vimeoId] = thumb;
-    return thumb;
-  } catch(e) {
-    return '';
-  }
+    return (data.thumbnail_url || '').replace(/_\d+x\d+/, '_640x360');
+  } catch(e) { return ''; }
 }
 
 function makeCard(v) {
   const card = document.createElement('div');
-  card.className = 'video-card reveal' + (v.featured ? ' featured' : ''); // Added reveal class
+  card.className = 'video-card reveal' + (v.featured ? ' featured' : '');
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', `Play video: ${v.title}`);
+  
   card.innerHTML = `
     <div class="video-thumb-wrap" style="width:100%;height:100%;position:relative;background:var(--panel);overflow:hidden;">
       <img class="video-thumb" src="" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;">
-      <div class="thumb-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" style="opacity:.15">
-          <rect x="4" y="4" width="24" height="24" rx="1" stroke="#D1B464" stroke-width="1"/>
-        </svg>
-      </div>
     </div>
-    <div class="video-play">
-      <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14" fill="#D1B464"/></svg>
-    </div>
+    <div class="video-play"><svg width="16" height="16"><polygon points="4,2 14,8 4,14" fill="#D1B464"/></svg></div>
     <div class="video-overlay">
       <div class="video-cat">${v.cat}</div>
       <div class="video-title">${v.title}</div>
-    </div>
-  `;
-  card.addEventListener('click', () => openLightbox(`https://player.vimeo.com/video/${v.vimeoId}?autoplay=1&title=0&byline=0&portrait=0`));
-
-  // Load thumbnail async
-  const img = card.querySelector('.video-thumb');
-  const loader = card.querySelector('.thumb-loading');
-  getVimeoThumb(v.vimeoId).then(url => {
-    if (url) {
-      img.src = url;
-      img.onload = () => {
-        img.style.opacity = '1';
-        if(loader) loader.style.display = 'none';
-      };
-    }
-  });
-
+    </div>`;
+    
+  card.addEventListener('click', () => openLightbox(`https://player.vimeo.com/video/${v.vimeoId}?autoplay=1`));
+  getVimeoThumb(v.vimeoId).then(url => { if (url) { const img = card.querySelector('.video-thumb'); img.src = url; img.onload = () => img.style.opacity = '1'; } });
   return card;
 }
 
@@ -1395,39 +1234,14 @@ function renderGrid() {
   const grid = document.getElementById('videoGrid');
   grid.innerHTML = '';
   videos.forEach(v => grid.appendChild(makeCard(v)));
-  // Re-observe new elements
-  grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
-/* ══════ LIGHTBOX ══════ */
 const lightbox = document.getElementById('lightbox');
-function openLightbox(url) {
-  document.getElementById('lightboxFrame').src = url;
-  lightbox.classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightboxFrame').src = '';
-  lightbox.classList.remove('open');
-}
-lightbox.addEventListener('click', function(e) {
-  if(e.target === this) closeLightbox();
-});
-// Close on Escape key
-document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-});
+function openLightbox(url) { document.getElementById('lightboxFrame').src = url; lightbox.classList.add('open'); }
+function closeLightbox() { document.getElementById('lightboxFrame').src = ''; lightbox.classList.remove('open'); }
 
-/* ══════ ADMIN ══════ */
-function openAdmin() {
-  document.getElementById('adminModal').classList.add('open');
-  renderAdminList();
-}
-function closeAdmin() {
-  document.getElementById('adminModal').classList.remove('open');
-}
-document.getElementById('adminModal').addEventListener('click', function(e) {
-  if(e.target === this) closeAdmin();
-});
+function openAdmin() { document.getElementById('adminModal').classList.add('open'); renderAdminList(); }
+function closeAdmin() { document.getElementById('adminModal').classList.remove('open'); }
 
 function renderAdminList() {
   const list = document.getElementById('adminVideoList');
@@ -1435,43 +1249,22 @@ function renderAdminList() {
   videos.forEach((v, i) => {
     const item = document.createElement('div');
     item.className = 'vlist-item';
-    item.innerHTML = `
-      <img class="vlist-thumb" id="at${i}" style="background:var(--panel)">
-      <div class="vlist-info">
-        <div class="vlist-name">${v.title}</div>
-        <div class="vlist-cat">${v.cat} ${v.featured ? '· ★ Featured' : ''}</div>
-      </div>
-      <button class="vlist-del" onclick="deleteVideo(${i})">✕ Remove</button>
-    `;
-    list.appendChild(item); getVimeoThumb(v.vimeoId).then(u=>{const el=list.querySelector('#at'+i);if(el&&u)el.src=u;});
+    item.innerHTML = `<div class="vlist-info"><div class="vlist-name">${v.title}</div></div><button class="vlist-del" onclick="deleteVideo(${i})">✕ Remove</button>`;
+    list.appendChild(item);
   });
 }
 
 function addVideo() {
   const title = document.getElementById('v-title').value.trim();
-  const cat   = document.getElementById('v-cat').value;
-  const vid   = document.getElementById('v-id').value.trim();
-  const feat  = document.getElementById('v-featured').value === 'true';
-  if(!title || !vid) { alert('Please enter both a title and Vimeo Video ID'); return; }
-  videos.unshift({ id: Date.now().toString(), title, cat, vimeoId: vid, featured: feat });
-  save(); renderGrid(); renderAdminList();
-  document.getElementById('v-title').value = '';
-  document.getElementById('v-id').value = '';
-}
-
-function deleteVideo(index) {
-  if(!confirm('Are you sure you want to remove this video from your portfolio?')) return;
-  videos.splice(index, 1);
+  const vid = document.getElementById('v-id').value.trim();
+  if(!title || !vid) return;
+  videos.unshift({ id: Date.now().toString(), title, cat:'WORK', vimeoId: vid, featured: false });
   save(); renderGrid(); renderAdminList();
 }
 
-/* ══════ INIT ══════ */
-// Slight delay to ensure fonts load before animation calculates spacing
-window.addEventListener('load', () => {
-    renderGrid();
-    io.observe(document.getElementById('videoGrid')); // Observe the grid container
-});
+function deleteVideo(index) { if(confirm('Remove?')) { videos.splice(index, 1); save(); renderGrid(); renderAdminList(); } }
 
+window.addEventListener('load', renderGrid);
 </script>
 </body>
 </html>
